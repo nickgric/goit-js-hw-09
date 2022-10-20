@@ -46,6 +46,8 @@ function submitEvent(event) {
 
     delay = delay + +stepInput.value;
   }
+
+  form.reset();
 }
 
 form.addEventListener('submit', submitEvent);

@@ -41,6 +41,7 @@ let currentDate = new Date();
 let timerMs = 0;
 let timerObj = {};
 let selectedDate = 0;
+let timerId = 0;
 
 const flatpickrOptions = {
   enableTime: true,
@@ -83,17 +84,12 @@ function timerUpdater() {
   timerMs = selectedDate - +Date.parse(currentDate);
   Notify.success('The timer has started');
   labelsUpdater();
-  setInterval(labelsUpdater, 1000);
+  timerId = setInterval(labelsUpdater, 1000);
 }
 
 function labelsUpdater() {
   startBtn.disabled = true;
   timeInput.disabled = true;
-
-  if (timerMs < 0) {
-    Notify.success('Timer has expired');
-    return;
-  }
 
   timerObj = convertMs(timerMs);
 
@@ -103,6 +99,12 @@ function labelsUpdater() {
   labelSeconds.textContent = addLeadingZero(timerObj.seconds);
 
   timerMs = timerMs - 1000;
+
+  if (timerMs < 0) {
+    Notify.success('Timer has expired');
+    clearTimeout(timerId);
+    return;
+  }
 }
 
 startBtn.addEventListener('click', timerUpdater);
