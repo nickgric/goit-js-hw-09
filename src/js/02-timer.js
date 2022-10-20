@@ -40,6 +40,7 @@ fields.forEach(field => {
 let currentDate = new Date();
 let timerMs = 0;
 let timerObj = {};
+let selectedDate = 0;
 
 const flatpickrOptions = {
   enableTime: true,
@@ -47,7 +48,8 @@ const flatpickrOptions = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    timerMs = +Date.parse(selectedDates[0]) - +Date.parse(currentDate);
+    selectedDate = +Date.parse(selectedDates[0]);
+    timerMs = selectedDate - +Date.parse(currentDate);
     if (timerMs <= 0) {
       Notify.failure('Please choose a date in the future!');
       return;
@@ -86,6 +88,8 @@ function timerUpdater() {
 function labelsUpdater() {
   startBtn.disabled = true;
   timeInput.disabled = true;
+
+  timerMs = selectedDate - +Date.parse(currentDate);
 
   if (timerMs < 0) {
     Notify.success('Timer has expired');
