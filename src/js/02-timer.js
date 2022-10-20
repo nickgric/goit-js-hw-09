@@ -80,16 +80,15 @@ function addLeadingZero(value) {
 }
 
 function timerUpdater() {
-  labelsUpdater();
+  timerMs = selectedDate - +Date.parse(currentDate);
   Notify.success('The timer has started');
+  labelsUpdater();
   setInterval(labelsUpdater, 1000);
 }
 
 function labelsUpdater() {
   startBtn.disabled = true;
   timeInput.disabled = true;
-
-  timerMs = selectedDate - +Date.parse(currentDate);
 
   if (timerMs < 0) {
     Notify.success('Timer has expired');
