@@ -35,7 +35,7 @@ function submitEvent(event) {
 
   let delay = +delayInput.value;
 
-  for (position = 1; position <= +amountInput.value; position += 1) {
+  for (let position = 1; position <= +amountInput.value; position += 1) {
     createPromise(position, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
